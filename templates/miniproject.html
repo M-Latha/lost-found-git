@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>College Lost & Found Portal</title>
+<style>
+:root{
+  --purple-1: #6a0dad;
+  --purple-2: #8e44ad;
+  --accent:   #7b2cbf;
+  --bg-1:     #f8f4fb;
+  --bg-2:     #f5f0fa;
+  --card-bg:  #ffffff;
+  --muted:    #444;
+  --success:  #2d8a4d;
+  --danger:   #d64545;
+  --shadow:   rgba(20,10,40,0.08);
+  --radius:   12px;
+}
+
+* { box-sizing: border-box; margin:0; padding:0; }
+
+body{
+  font-family: "Poppins", "Segoe UI", Tahoma, sans-serif;
+  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  color:#222;
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(90deg, var(--purple-1), var(--purple-2));
+  color:white;
+  padding: 18px 16px;
+  text-align: center;
+  font-size:20px;
+  font-weight:700;
+}
+
+/* PAGE */
+.page {
+  display:none;
+  min-height: calc(100vh - 80px);
+  padding:36px 20px;
+}
+.page.centered {
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* BUTTONS */
+.btn{
+  background:linear-gradient(90deg,var(--accent),#9d4edd);
+  padding:12px 26px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+}
+.back-btn{
+  background:white;
+  border:2px solid #e4d6ff;
+  border-radius:8px;
+  padding:8px 16px;
+  cursor:pointer;
+  color:var(--purple-1);
+}
+
+/* LOGIN */
+.login-card{
+  width:720px;
+  max-width:95%;
+  background:#fff;
+  padding:26px;
+  border-radius:14px;
+  box-shadow:0 10px 26px var(--shadow);
+  margin:auto;
+}
+
+input[type="text"], input[type="date"], select, textarea{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #e4d6ff;
+  margin-top:6px;
+  margin-bottom:12px;
+  font-size:14px;
+}
+
+/* BIGGER DESCRIPTION */
+textarea{
+  min-height:140px;
+  resize: vertical;
+}
+
+/* DASHBOARD */
+.dashboard-grid{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns: 1fr 300px;
+  gap:24px;
+}
+
+/* WELCOME CARD */
+.welcome-card{
+  background:white;
+  box-shadow:0 10px 26px rgba(0,0,0,0.05);
+  border-radius:14px;
+  padding:28px;
+  max-width:750px;
+  margin:auto;
+}
+
+.quotes{
+  font-weight:700;
+  font-size:20px;
+  color:#8a00ff;
+  text-shadow:0px 1px 3px rgba(110,0,150,0.25);
+}
+
+/* QUICK STATS */
+.stats-card{
+  background:white;
+  border-radius:14px;
+  padding:22px;
+  box-shadow:0 10px 26px rgba(94,0,135,0.08);
+  border-left:6px solid var(--purple-2);
+  animation: pop 0.3s ease-in;
+}
+
+/* CATEGORY COUNTS */
+#catCounts div{
+  background:#faf6ff;
+  border-radius:8px;
+  padding:6px 12px;
+  font-weight:600;
+  border:1px solid #e1cef9;
+  color:#4a0072;
+  margin-bottom:6px;
+  box-shadow:0 3px 6px rgba(94,0,135,0.06);
+}
+
+/* CATEGORY BUTTONS FIX ✅ */
+.cat-list button{
+  background:#faf6ff;
+  border:1px solid #d6c8ff;
+  border-radius:8px;
+  padding:6px 12px;
+  cursor:pointer;
+  font-weight:600;
+  margin-bottom:6px;
+}
+.cat-list button:hover{
+  background:#e9d8ff;
+  transform:scale(1.05);
+}
+
+/* ITEM CARDS */
+.item-card {
+  width:260px;
+  background:white;
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 6px 18px rgba(20,10,40,0.06);
+}
+.item-card img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+/* FORM CARD */
+.report-card{
+  width:520px;
+  background:white;
+  padding:26px;
+  border-radius:14px;
+  box-shadow:0 10px 28px rgba(0,0,0,0.06);
+  margin:auto;
+}
+.cat-col {
+  width:180px;
+  padding:10px;
+  background:white;
+  border-radius:10px;
+  box-shadow:0 6px 18px rgba(20,10,40,0.06);
+}
+
+.cat-list {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.cat-list button {
+  width:100%;
+  text-align:left;
+}
+.view-layout {
+  display:grid;
+  grid-template-columns: 220px 1fr;
+  gap:24px;
+}
+
+.cat-col {
+  background:white;
+  padding:12px;
+  border-radius:10px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.05);
+}
+
+.cat-list {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.cat-list button {
+  width:100%;
+  padding:8px;
+  border:none;
+  background:#f2e9ff;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+  color:#4a0072;
+}
+.cat-list button:hover {
+  background:#e4d6ff;
+}
+
+.items-wrap {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap:20px;
+}
+
+.item-card {
+  background:white;
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.05);
+}
+/* ✅ Mobile Responsive Fix */
+@media(max-width: 768px) {
+
+  .dashboard-grid {
+      grid-template-columns: 1fr;
+      padding: 10px;
+  }
+
+  .welcome-card, .stats-card {
+      width: 100%;
+      margin-bottom: 18px;
+  }
+
+  .view-layout {
+      display: block;
+  }
+
+  .cat-col {
+      width: 100%;
+      margin-bottom: 14px;
+  }
+
+  .item-card {
+      width: 100%;
+  }
+
+  img {
+      width: 100% !important;
+      height: auto !important;
+  }
+
+  .btn, .back-btn {
+      width: 100%;
+      text-align: center;
+      display: block;
+      margin-top: 6px;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>College Lost & Found System</h1>
+</header>
+
+<section id="loginPage" class="page centered" style="display:flex;">
+  <div class="login-card">
+    <h2 style="text-align:center;margin:0 0 14px;color:var(--purple-1)">Login to Continue</h2>
+
+    <form id="loginForm">
+      <div class="form-row">
+        <label for="loginName">Name:</label>
+        <input id="loginName" type="text" required />
+      </div>
+
+      <div class="form-row">
+        <label for="loginUSN">USN :</label>
+        <input id="loginUSN" type="text" maxlength="10" required />
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+        <button class="btn" type="submit" style="padding:10px 18px;">Login</button>
+        <div id="loginError" style="color:var(--danger);font-weight:700;display:none;">❌ Invalid USN</div>
+      </div>
+    </form>
+
+    <div class="small-note" style="text-align:center;margin-top:12px;">Use your college USN</div>
+  </div>
+</section>
+
+<section id="homePage" class="page centered" style="display:none;">
+  <div class="dashboard-grid">
+    <div class="welcome-card">
+      <h2>Welcome!</h2>
+      <p style="color:var(--muted)">Use this portal to report lost or found items on campus.</p>
+
+     <h2 id="quoteText" style="color:#8A2BE2;font-weight:700;">
+    Helping lost items find their way home.
+     </h2>
+      <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+        <button class="btn" onclick="showReportPage()">➕ Report Item</button>
+        <button class="btn" onclick="showViewChoice()">👀 View Items</button>
+      </div>
+    </div>
+
+    <div class="stats-card">
+      <h3>Quick Stats</h3>
+      <div><b>Total Items: </b><span id="statTotal">0</span></div>
+      <div><b>Lost Items: </b><span id="statLost">0</span></div>
+      <div><b>Found Items: </b><span id="statFound">0</span></div>
+
+      <hr style="margin:12px 0;">
+      <b>Category counts</b>
+      <div id="catCounts"></div>
+    </div>
+  </div>
+</section>
+
+<section id="reportPage" class="page centered" style="display:none;">
+  <div class="report-card">
+    <h2>Report Item</h2>
+    <form id="itemForm" enctype="multipart/form-data">
+
+      <label>Your Name:</label>
+      <input id="reportName" name="name" type="text" readonly />
+
+      <label>Your USN:</label>
+      <input id="reportUSN" name="usn" type="text" maxlength="10" readonly />
+
+      <label>Choose one:</label>
+      <select id="type" name="type" required>
+        <option value="">Select Type</option>
+        <option value="Lost">Lost Item</option>
+        <option value="Found">Found Item</option>
+      </select>
+
+      <label>Item Category:</label>
+      <select id="category" name="category" required>
+        <option value="">Select Category</option>
+        <option>Books</option>
+        <option>ID Card</option>
+        <option>Electronics</option>
+        <option>Water Bottle</option>
+        <option>Bag</option>
+        <option>Keys</option>
+        <option>Other</option>
+      </select>
+
+      <label>Contact:</label>
+      <input id="contact" name="contact" type="text" maxlength="10" required />
+
+      <label>Item Details:</label>
+      <textarea id="details" name="details" placeholder="Describe the item" required></textarea>
+
+      <label>Date:</label>
+      <input id="date" name="date" type="date" required />
+
+      <label>Upload Item Image (optional):</label>
+      <input id="itemImage" name="image" type="file" accept="image/*" />
+
+      <div style="display:flex; gap:12px; align-items:center; margin-top:10px;">
+        <button class="btn" type="submit">Submit</button>
+        <button class="back-btn" type="button" onclick="backToHome()">⬅ Back</button>
+        <div id="submitMsg" style="display:none;font-weight:700;"></div>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<section id="viewChoicePage" class="page centered" style="display:none;">
+  <div style="width:520px; max-width:94%; text-align:center; margin:auto;">
+    <div style="background:var(--card-bg); padding:26px; border-radius:12px; box-shadow:0 10px 24px rgba(80,40,120,0.06);">
+      <h2 style="margin:0;color:var(--purple-1)">View Items</h2>
+      <p style="color:var(--muted); margin-top:8px;">Choose which list you want to see</p>
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:12px; flex-wrap:wrap;">
+        <button class="btn" onclick="showLostItems()">📕 View Lost Items</button>
+        <button class="btn" onclick="showFoundItems()">📗 View Found Items</button>
+      </div>
+      <div style="margin-top:14px;"><button class="back-btn" onclick="backToHome()">⬅ Back</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="lostItemsPage" class="page" style="display:none;">
+  <div style="max-width:1100px;margin:6px auto;">
+    <h2 style="color:var(--purple-1);margin-top:6px;">📕 Lost Items</h2>
+    <div class="view-layout">
+      <div class="cat-col">
+        <div class="cat-title">Categories</div>
+        <div id="lostCatList" class="cat-list"></div>
+      </div>
+
+      <div style="flex:1">
+        <div id="lostItemsList" class="items-wrap"></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:10px;"><button class="back-btn" onclick="backToViewChoice()">⬅ Back</button></div>
+  </div>
+</section>
+
+<section id="foundItemsPage" class="page" style="display:none;">
+  <div style="max-width:1100px;margin:6px auto;">
+    <h2 style="color:var(--purple-1);margin-top:6px;">📗 Found Items</h2>
+    <div class="view-layout">
+      <div class="cat-col">
+        <div class="cat-title">Categories</div>
+        <div id="foundCatList" class="cat-list"></div>
+      </div>
+
+      <div style="flex:1">
+        <div id="foundItemsList" class="items-wrap"></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:10px;"><button class="back-btn" onclick="backToViewChoice()">⬅ Back</button></div>
+  </div>
+</section>
+
+<script>
+let loginPage=document.getElementById("loginPage"),
+homePage=document.getElementById("homePage"),
+reportPage=document.getElementById("reportPage"),
+viewChoicePage=document.getElementById("viewChoicePage"),
+lostItemsPage=document.getElementById("lostItemsPage"),
+foundItemsPage=document.getElementById("foundItemsPage"),
+loginForm=document.getElementById("loginForm"),
+loginUSN=document.getElementById("loginUSN"),
+loginName=document.getElementById("loginName"),
+loginError=document.getElementById("loginError"),
+itemForm=document.getElementById("itemForm"),
+reportUSN=document.getElementById("reportUSN"),
+reportName=document.getElementById("reportName"),
+submitMsg=document.getElementById("submitMsg"),
+lostItemsList=document.getElementById("lostItemsList"),
+foundItemsList=document.getElementById("foundItemsList"),
+lostCatList=document.getElementById("lostCatList"),
+foundCatList=document.getElementById("foundCatList"),
+statTotal=document.getElementById("statTotal"),
+statLost=document.getElementById("statLost"),
+statFound=document.getElementById("statFound"),
+catCounts=document.getElementById("catCounts");
+
+const CATEGORIES=["All","Books","ID Card","Electronics","Water Bottle","Bag","Keys","Other"];
+let items=[];
+let currentUser={};
+
+async function loadItems(){
+  const r=await fetch("/get_items");
+  items=await r.json();
+  refreshDashboard();
+}
+
+loginForm.addEventListener("submit",async(e)=>{
+  e.preventDefault();
+  let usn=loginUSN.value.trim().toUpperCase(),
+  name=loginName.value.trim();
+  if(usn.length!==10||!usn.startsWith("3BR")){
+    loginError.style.display="block";
+    setTimeout(()=>loginError.style.display="none",1500);
+    return;
+  }
+  currentUser={name,usn};
+  reportName.value=name;
+  reportUSN.value=usn;
+  showHome();
+  await loadItems();
+});
+
+function hideAll(){[loginPage,homePage,reportPage,viewChoicePage,lostItemsPage,foundItemsPage].forEach(p=>p.style.display="none");}
+function showHome(){hideAll();homePage.style.display="block";}
+function showReportPage(){hideAll();reportPage.style.display="block";}
+function showViewChoice(){hideAll();viewChoicePage.style.display="block";}
+function backToHome(){showHome();}
+function backToViewChoice(){hideAll();viewChoicePage.style.display="block";}
+
+/* ✅ Submit Message Auto Hide */
+itemForm.addEventListener("submit",async(e)=>{
+  e.preventDefault();
+  let f=new FormData(itemForm);
+  const r=await fetch("/submit",{method:"POST",body:f});
+  const j=await r.json();
+  if(j.status==="success"){
+    submitMsg.style.display="block";
+    submitMsg.style.color="green";
+    submitMsg.textContent="✅ Submitted!";
+    itemForm.reset();
+    reportName.value=currentUser.name;
+    reportUSN.value=currentUser.usn;
+    await loadItems();
+  }else{
+    submitMsg.style.display="block";
+    submitMsg.style.color="red";
+    submitMsg.textContent="❌ Something went wrong";
+  }
+
+  setTimeout(()=>{
+    submitMsg.style.display="none";
+  },2000);
+});
+
+function showLostItems(){hideAll();lostItemsPage.style.display="block";buildCats();renderItems("Lost","All");}
+function showFoundItems(){hideAll();foundItemsPage.style.display="block";buildCats();renderItems("Found","All");}
+
+/* CATEGORY BUTTONS BUILDER ✅ */
+function buildCats(){
+  lostCatList.innerHTML="";
+  foundCatList.innerHTML="";
+  CATEGORIES.forEach(c=>{
+    lostCatList.innerHTML+=`<button onclick="renderItems('Lost','${c}')">${c}</button>`;
+    foundCatList.innerHTML+=`<button onclick="renderItems('Found','${c}')">${c}</button>`;
+  });
+}
+
+/* ✅ FIXED IMAGE PATH */
+function renderItems(type, cat){
+  let box = (type === "Lost") ? lostItemsList : foundItemsList;
+  box.innerHTML = "";
+
+  let filtered = items.filter(i => i.type === type && (cat === "All" || i.category === cat));
+
+  if(filtered.length === 0){
+    box.innerHTML = "<div style='padding:10px;font-weight:600;color:#555'>No items found</div>";
+    return;
+  }
+
+  filtered.forEach(it => {
+    let imgTag = it.img ? `<img src="${it.img}" style="width:200px;height:200px;object-fit:cover;border-radius:10px;">` : "";
+
+    box.innerHTML += `
+    <div class="item-card">
+      ${imgTag}
+      <h3>${it.category}</h3>
+      <p><b>Details:</b> ${it.details}</p>
+      <p><b>Date:</b> ${formatDate(it.date)}</p>
+      <p><b>Reporter:</b> ${it.name} (${it.usn})</p>
+      <p><b>Contact:</b> ${it.contact}</p>
+      <button onclick="copyDetails('${it.details}','${it.contact}','${it.name}','${it.usn}')">Copy</button>
+      ${it.usn === currentUser.usn 
+  ? `<button onclick="deleteItem('${it.id}', '${type}')">Delete</button>`
+  : `<div style="font-size:13px;color:#888;">(You cannot delete this)</div>`
+}
+
+    </div>`;
+  });
+}
+async function deleteItem(id,t){
+  let f=new FormData();
+  f.append("id",id);
+  f.append("usn", currentUser.usn); 
+  const r = await fetch("/delete_item",{method:"POST",body:f});
+  const j = await r.json();
+
+  if(j.status === "unauthorized"){
+      alert("❌ You cannot delete this item.");
+      return;
+  }
+
+  await loadItems();
+  renderItems(t,"All");
+}
+function refreshDashboard(){
+  statTotal.textContent=items.length;
+  statLost.textContent=items.filter(x=>x.type==="Lost").length;
+  statFound.textContent=items.filter(x=>x.type==="Found").length;
+  catCounts.innerHTML="";
+  CATEGORIES.slice(1).forEach(c=>{
+    let n=items.filter(x=>x.category===c).length;
+    catCounts.innerHTML+=`<div>${c}: ${n}</div>`;
+  });
+}
+function copyDetails(details, contact, name, usn) {
+    let text = 
+`Reporter: ${name} (${usn})
+Contact: ${contact}
+Details: ${details}`;
+
+    // ✅ Try modern clipboard API
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("✅ Details copied");
+        }).catch(() => fallbackCopy(text));
+    } else {
+        // ✅ fallback for insecure / mobile browsers
+        fallbackCopy(text);
+    }
+}
+
+// ✅ fallback function
+function fallbackCopy(text) {
+    let textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("✅ Details copied");
+}
+
+function formatDate(d){
+    // input "2025-11-04"
+    let parts = d.split("-");
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+let QUOTES=[
+  "Every lost thing has a story waiting to be reunited.",
+  "Bringing the lost back to where they belong.",
+  "Helping lost items find their way home."
+];
+let qi=0;
+function rotateQuotes(){
+  document.getElementById("quoteText").innerText = QUOTES[qi];
+  qi=(qi+1)%QUOTES.length;
+}
+setInterval(rotateQuotes,2000);
+
+(function start(){
+  hideAll();
+  loginPage.style.display="flex";
+  loadItems();
+  rotateQuotes();
+})();
+{it.usn === currentUser.usn 
+    ? `<button onclick="deleteItem('${it.id}', '${type}')">Delete</button>`
+    : `<div style="font-size:13px;color:#999;">(You cannot delete this)</div>`
+}
+</script>
+</body>
+</html>
