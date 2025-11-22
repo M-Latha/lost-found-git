@@ -6,11 +6,14 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# ✅ Create upload folder if missing
+# create upload folder if missing
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
-# ✅ Create DB if not exists
+# admin USN (set to the value you provided)
+ADMIN_USN = "3BRAMD0001"
+
+# create DB if not exists
 def init_db():
     conn = sqlite3.connect('items.db')
     c = conn.cursor()
@@ -30,12 +33,12 @@ def init_db():
 
 init_db()
 
-# ✅ HOME ROUTE
+# HOME ROUTE
 @app.route('/')
 def home():
     return render_template("miniproject.html")
 
-# ✅ GET ITEMS
+# GET ITEMS
 @app.route('/get_items', methods=['GET'])
 def get_items():
     conn = sqlite3.connect('items.db')
@@ -60,28 +63,27 @@ def get_items():
 
     return jsonify(items)
 
-# ✅ SUBMIT ITEM
+# SUBMIT ITEM
 @app.route('/submit', methods=['POST'])
 def submit():
     try:
-        item_type = request.form['type']
-        category = request.form['category']
-        name = request.form['name']
-        usn = request.form['usn']
-        contact = request.form['contact']
-        details = request.form['details']
-        date = request.form['date']
+        item_type = request.form.get('type', '')
+        category = request.form.get('category', '')
+        name = request.form.get('name', '')
+        usn = request.form.get('usn', '')
+        contact = request.form.get('contact', '')
+        details = request.form.get('details', '')
+        date = request.form.get('date', '')
 
         img_path = ""
 
         if 'image' in request.files:
             image = request.files['image']
-            if image.filename != "":
+            if image and image.filename != "":
                 filename = secure_filename(image.filename)
-                save_path = os.path.join(app.root_path, 'static', 'uploads', filename)
+                save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 image.save(save_path)
-
-                # ✅ Correct web path for browser
+                # store path that browser can use
                 img_path = f"/static/uploads/{filename}"
 
         conn = sqlite3.connect('items.db')
@@ -93,40 +95,50 @@ def submit():
 
         return jsonify({"status": "success"})
     except Exception as e:
-        print("ERROR:", e)
-        return jsonify({"status": "error"})
+        print("ERROR in /submit:", e)
+        return jsonify({"status": "error", "message": str(e)})
 
-# ✅ DELETE ITEM
+# DELETE ITEM (admin OR owner allowed)
 @app.route('/delete_item', methods=['POST'])
 def delete_item():
     try:
-        item_id = request.form['id']
-        user_usn = request.form['usn']   # ✅ logged-in user trying to delete
+        item_id = request.form.get('id')
+        user_usn = request.form.get('usn', '')
+
+        if not item_id:
+            return jsonify({"status": "error", "message": "no id"})
 
         conn = sqlite3.connect('items.db')
         c = conn.cursor()
 
-        # ✅ Only delete if the same USN reported it
-        c.execute("DELETE FROM items WHERE id=? AND usn=?", (item_id, user_usn))
-        conn.commit()
-        conn.close()
+        # find owner of item
+        c.execute("SELECT usn FROM items WHERE id=?", (item_id,))
+        row = c.fetchone()
+        if not row:
+            conn.close()
+            return jsonify({"status": "error", "message": "item not found"})
 
-        # ✅ If no row deleted → unauthorized delete
-        if c.rowcount == 0:
+        owner_usn = row[0]
+
+        # allow delete if requesting user is admin OR owner
+        if user_usn == ADMIN_USN or user_usn == owner_usn:
+            c.execute("DELETE FROM items WHERE id=?", (item_id,))
+            conn.commit()
+            conn.close()
+            return jsonify({"status": "deleted"})
+        else:
+            conn.close()
             return jsonify({"status": "unauthorized"})
 
-        return jsonify({"status": "deleted"})
-
     except Exception as e:
+        print("ERROR in /delete_item:", e)
         return jsonify({"status": "error", "message": str(e)})
 
-
-# ✅ Serve uploaded images
+# serve images
 @app.route('/static/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == "__main__":
+    # for local testing
     app.run(host='0.0.0.0', port=5000, debug=True)
-
-

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>College Lost & Found Portal</title>
+<title>LocateNow-Report . Track . Reunite</title>
 <style>
 :root{
   --purple-1: #6a0dad;
@@ -106,19 +106,25 @@ textarea{
 
 /* WELCOME CARD */
 .welcome-card {
-    width: 750px;              /* Fixed width */
-    max-width: 90%;            /* For mobile */
-    min-height: 180px;         /* So height stays stable */
-    overflow: hidden;          /* Prevent jumping */
+    width: 750px;
+    max-width: 90%;
+    min-height: 180px;
+    overflow: hidden;
+    padding: 28px;
+    background: white;
+    border-radius: 14px;
+    box-shadow:0 10px 26px rgba(0,0,0,0.05);
+    margin:auto;
 }
 #quoteText {
     display: block;
-    margin-top: 10px;      /* Push quote down */
+    margin-top: 10px;
     text-align: left;
     font-weight: 700;
     font-size: 20px;
     color: #8A2BE2;
 }
+
 /* QUICK STATS */
 .stats-card{
   background:white;
@@ -126,7 +132,6 @@ textarea{
   padding:22px;
   box-shadow:0 10px 26px rgba(94,0,135,0.08);
   border-left:6px solid var(--purple-2);
-  animation: pop 0.3s ease-in;
 }
 
 /* CATEGORY COUNTS */
@@ -141,21 +146,59 @@ textarea{
   box-shadow:0 3px 6px rgba(94,0,135,0.06);
 }
 
-/* CATEGORY BUTTONS FIX ✅ */
-.cat-list button{
-  background:#faf6ff;
-  border:1px solid #d6c8ff;
-  border-radius:8px;
-  padding:6px 12px;
-  cursor:pointer;
-  font-weight:600;
-  margin-bottom:6px;
+/* CATEGORY BUTTONS */
+/* CATEGORY BUTTONS – CLEAN, NEAT & EVEN */
+.cat-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
-.cat-list button:hover{
-  background:#e9d8ff;
-  transform:scale(1.05);
+/* CATEGORY PANEL */
+.cat-col {
+  width: 230px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5d9ff;
 }
 
+/* CATEGORY TITLE */
+.cat-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #6a0dad;
+  letter-spacing: 0.3px;
+}
+
+/* VERTICAL CATEGORY BUTTONS */
+.cat-list {
+  display: flex;
+  flex-direction: column;   /* Force vertical layout */
+  gap: 10px;                /* Space between buttons */
+}
+
+/* BUTTON STYLE */
+.cat-list button {
+  width: 100%;  
+  padding: 12px;
+  border-radius: 10px;
+  background: #f8f3ff;
+  border: 1px solid #d5c7ff;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;         /* Makes it look official */
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* HOVER */
+.cat-list button:hover {
+  background: #eadcff;
+  border-color: #b89efc;
+  transform: translateX(5px);
+}
 /* ITEM CARDS */
 .item-card {
   width:260px;
@@ -180,54 +223,20 @@ textarea{
   box-shadow:0 10px 28px rgba(0,0,0,0.06);
   margin:auto;
 }
+
+/* layout changes for categories + items */
 .cat-col {
   width:180px;
-  padding:10px;
-  background:white;
-  border-radius:10px;
-  box-shadow:0 6px 18px rgba(20,10,40,0.06);
-}
-
-.cat-list {
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.cat-list button {
-  width:100%;
-  text-align:left;
-}
-.view-layout {
-  display:grid;
-  grid-template-columns: 220px 1fr;
-  gap:24px;
-}
-
-.cat-col {
-  background:white;
   padding:12px;
+  background:white;
   border-radius:10px;
   box-shadow:0 4px 16px rgba(0,0,0,0.05);
 }
 
-.cat-list {
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.cat-list button {
-  width:100%;
-  padding:8px;
-  border:none;
-  background:#f2e9ff;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:600;
-  color:#4a0072;
-}
-.cat-list button:hover {
-  background:#e4d6ff;
+.view-layout {
+  display:grid;
+  grid-template-columns: 220px 1fr;
+  gap:24px;
 }
 
 .items-wrap {
@@ -236,56 +245,22 @@ textarea{
   gap:20px;
 }
 
-.item-card {
-  background:white;
-  border-radius:12px;
-  padding:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.05);
-}
-/* ✅ Mobile Responsive Fix */
+/* Mobile Responsive */
 @media(max-width: 768px) {
-
-  .dashboard-grid {
-      grid-template-columns: 1fr;
-      padding: 10px;
-  }
-
-  .welcome-card, .stats-card {
-      width: 100%;
-      margin-bottom: 18px;
-  }
-
-  .view-layout {
-      display: block;
-  }
-
-  .cat-col {
-      width: 100%;
-      margin-bottom: 14px;
-  }
-
-  .item-card {
-      width: 100%;
-  }
-
-  img {
-      width: 100% !important;
-      height: auto !important;
-  }
-
-  .btn, .back-btn {
-      width: 100%;
-      text-align: center;
-      display: block;
-      margin-top: 6px;
-  }
+  .dashboard-grid { grid-template-columns: 1fr; padding: 10px; }
+  .welcome-card, .stats-card { width: 100%; margin-bottom: 18px; }
+  .view-layout { display: block; }
+  .cat-col { width: 100%; margin-bottom: 14px; }
+  .item-card { width: 100%; }
+  img { width: 100% !important; height: auto !important; }
+  .btn, .back-btn { width: 100%; text-align: center; display: block; margin-top: 6px; }
 }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>LocateNow-Report . Track . Reunite</h1>
+  <h1>LocateNow - Report · Track · Reunite</h1>
 </header>
 
 <section id="loginPage" class="page centered" style="display:flex;">
@@ -319,9 +294,8 @@ textarea{
       <h2>Welcome!</h2>
       <p style="color:var(--muted)">Use this portal to report lost or found items on campus.</p>
 
-     <h2 id="quoteText" style="color:#8A2BE2;font-weight:700;">
-    Helping lost items find their way home.
-     </h2>
+     <div id="quoteText">Helping lost items find their way home.</div>
+
       <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
         <button class="btn" onclick="showReportPage()">➕ Report Item</button>
         <button class="btn" onclick="showViewChoice()">👀 View Items</button>
@@ -384,7 +358,7 @@ textarea{
       <input id="itemImage" name="image" type="file" accept="image/*" />
 
       <div style="display:flex; gap:12px; align-items:center; margin-top:10px;">
-        <button class="btn" type="submit">Submit</button>
+        <button class="btn" id="submitBtn" type="submit">Submit</button>
         <button class="back-btn" type="button" onclick="backToHome()">⬅ Back</button>
         <div id="submitMsg" style="display:none;font-weight:700;"></div>
       </div>
@@ -440,105 +414,161 @@ textarea{
     <div style="text-align:center;margin-top:10px;"><button class="back-btn" onclick="backToViewChoice()">⬅ Back</button></div>
   </div>
 </section>
-
 <script>
-let loginPage=document.getElementById("loginPage"),
-homePage=document.getElementById("homePage"),
-reportPage=document.getElementById("reportPage"),
-viewChoicePage=document.getElementById("viewChoicePage"),
-lostItemsPage=document.getElementById("lostItemsPage"),
-foundItemsPage=document.getElementById("foundItemsPage"),
-loginForm=document.getElementById("loginForm"),
-loginUSN=document.getElementById("loginUSN"),
-loginName=document.getElementById("loginName"),
-loginError=document.getElementById("loginError"),
-itemForm=document.getElementById("itemForm"),
-reportUSN=document.getElementById("reportUSN"),
-reportName=document.getElementById("reportName"),
-submitMsg=document.getElementById("submitMsg"),
-lostItemsList=document.getElementById("lostItemsList"),
-foundItemsList=document.getElementById("foundItemsList"),
-lostCatList=document.getElementById("lostCatList"),
-foundCatList=document.getElementById("foundCatList"),
-statTotal=document.getElementById("statTotal"),
-statLost=document.getElementById("statLost"),
-statFound=document.getElementById("statFound"),
-catCounts=document.getElementById("catCounts");
+/* ===== CONFIG ===== */
+const ADMIN_USN = "3BRAMD0001"; // <-- set your admin USN here (must match backend ADMIN_USN)
 
-const CATEGORIES=["All","Books","ID Card","Electronics","Water Bottle","Bag","Keys","Other"];
-let items=[];
-let currentUser={};
+/* ===== DOM refs ===== */
+let loginPage = document.getElementById("loginPage"),
+    homePage = document.getElementById("homePage"),
+    reportPage = document.getElementById("reportPage"),
+    viewChoicePage = document.getElementById("viewChoicePage"),
+    lostItemsPage = document.getElementById("lostItemsPage"),
+    foundItemsPage = document.getElementById("foundItemsPage"),
+    loginForm = document.getElementById("loginForm"),
+    loginUSN = document.getElementById("loginUSN"),
+    loginName = document.getElementById("loginName"),
+    loginError = document.getElementById("loginError"),
+    itemForm = document.getElementById("itemForm"),
+    reportUSN = document.getElementById("reportUSN"),
+    reportName = document.getElementById("reportName"),
+    submitMsg = document.getElementById("submitMsg"),
+    lostItemsList = document.getElementById("lostItemsList"),
+    foundItemsList = document.getElementById("foundItemsList"),
+    lostCatList = document.getElementById("lostCatList"),
+    foundCatList = document.getElementById("foundCatList"),
+    statTotal = document.getElementById("statTotal"),
+    statLost = document.getElementById("statLost"),
+    statFound = document.getElementById("statFound"),
+    catCounts = document.getElementById("catCounts"),
+    quoteText = document.getElementById("quoteText"),
+    viewLostBtn = null,
+    viewFoundBtn = null;
 
+const CATEGORIES = ["All","Books","ID Card","Electronics","Water Bottle","Bag","Keys","Other"];
+let items = [];
+let currentUser = { name: "", usn: "", isAdmin: false };
+
+/* ===== helper: loads items from backend ===== */
 async function loadItems(){
-  const r=await fetch("/get_items");
-  items=await r.json();
-  refreshDashboard();
+  try{
+    const r = await fetch("/get_items");
+    if(!r.ok) { console.error("get_items fetch failed", r.status); return; }
+    items = await r.json();
+    refreshDashboard();
+  }catch(err){
+    console.error("loadItems error:", err);
+  }
 }
 
-loginForm.addEventListener("submit",async(e)=>{
+/* ===== login ===== */
+loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  let usn=loginUSN.value.trim().toUpperCase(),
-  name=loginName.value.trim();
-  if(usn.length!==10||!usn.startsWith("3BR")){
-    loginError.style.display="block";
-    setTimeout(()=>loginError.style.display="none",1500);
+  try {
+    let usn = loginUSN.value.trim().toUpperCase();
+    let name = loginName.value.trim();
+
+    // Keep existing validation: 10 chars and starting with 3BR
+    if(usn.length !== 10 || !usn.startsWith("3BR")){
+      loginError.style.display = "block";
+      setTimeout(()=> loginError.style.display = "none", 1500);
+      return;
+    }
+
+    currentUser = { name, usn, isAdmin:false };
+    if(usn === ADMIN_USN) {
+      currentUser.isAdmin = true;
+      console.log("Admin logged in");
+    }
+
+    // set readonly report fields
+    if(reportName) reportName.value = currentUser.name;
+    if(reportUSN) reportUSN.value = currentUser.usn;
+
+    showHome();
+    await loadItems();
+  } catch (err) {
+    console.error("login error:", err);
+  }
+});
+
+/* ===== page helpers ===== */
+function hideAll(){
+  [loginPage, homePage, reportPage, viewChoicePage, lostItemsPage, foundItemsPage].forEach(p=>{
+    if(p) p.style.display = "none";
+  });
+}
+function showHome(){ hideAll(); if(homePage) homePage.style.display = "block"; }
+function showReportPage(){ hideAll(); if(reportPage) reportPage.style.display = "block"; }
+function showViewChoice(){ hideAll(); if(viewChoicePage) viewChoicePage.style.display = "block"; }
+function backToHome(){ showHome(); }
+function backToViewChoice(){ hideAll(); if(viewChoicePage) viewChoicePage.style.display = "block"; }
+
+/* ===== submit item handler ===== */
+itemForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // ensure current user values are present in form
+  if(reportName) reportName.value = currentUser.name || reportName.value;
+  if(reportUSN) reportUSN.value = currentUser.usn || reportUSN.value;
+
+  let f = new FormData(itemForm);
+
+  if(!f.get("type") || !f.get("category")){
+    showSubmitMessage("❌ Select type & category", "red");
     return;
   }
-  currentUser={name,usn};
-  reportName.value=name;
-  reportUSN.value=usn;
-  showHome();
-  await loadItems();
-});
 
-function hideAll(){[loginPage,homePage,reportPage,viewChoicePage,lostItemsPage,foundItemsPage].forEach(p=>p.style.display="none");}
-function showHome(){hideAll();homePage.style.display="block";}
-function showReportPage(){hideAll();reportPage.style.display="block";}
-function showViewChoice(){hideAll();viewChoicePage.style.display="block";}
-function backToHome(){showHome();}
-function backToViewChoice(){hideAll();viewChoicePage.style.display="block";}
-
-/* ✅ Submit Message Auto Hide */
-itemForm.addEventListener("submit",async(e)=>{
-  e.preventDefault();
-  let f=new FormData(itemForm);
-  const r=await fetch("/submit",{method:"POST",body:f});
-  const j=await r.json();
-  if(j.status==="success"){
-    submitMsg.style.display="block";
-    submitMsg.style.color="green";
-    submitMsg.textContent="✅ Submitted!";
-    itemForm.reset();
-    reportName.value=currentUser.name;
-    reportUSN.value=currentUser.usn;
-    await loadItems();
-  }else{
-    submitMsg.style.display="block";
-    submitMsg.style.color="red";
-    submitMsg.textContent="❌ Something went wrong";
+  try {
+    const r = await fetch("/submit", { method: "POST", body: f });
+    const j = await r.json();
+    if(j.status === "success"){
+      showSubmitMessage("✅ Submitted!", "green");
+      itemForm.reset();
+      if(reportName) reportName.value = currentUser.name;
+      if(reportUSN) reportUSN.value = currentUser.usn;
+      await loadItems();
+    } else {
+      console.error("submit failed:", j);
+      showSubmitMessage("❌ Something went wrong", "red");
+    }
+  } catch(err) {
+    console.error("submit error:", err);
+    showSubmitMessage("❌ Network error", "red");
   }
-
-  setTimeout(()=>{
-    submitMsg.style.display="none";
-  },2000);
 });
 
-function showLostItems(){hideAll();lostItemsPage.style.display="block";buildCats();renderItems("Lost","All");}
-function showFoundItems(){hideAll();foundItemsPage.style.display="block";buildCats();renderItems("Found","All");}
+function showSubmitMessage(text, color){
+  if(!submitMsg) return;
+  submitMsg.style.display = "block";
+  submitMsg.style.color = color;
+  submitMsg.textContent = text;
+  setTimeout(()=> submitMsg.style.display = "none", 2000);
+}
 
-/* CATEGORY BUTTONS BUILDER ✅ */
+/* ===== categories builder ===== */
 function buildCats(){
-  lostCatList.innerHTML="";
-  foundCatList.innerHTML="";
+  if(!lostCatList || !foundCatList) return;
+  lostCatList.innerHTML = "";
+  foundCatList.innerHTML = "";
   CATEGORIES.forEach(c=>{
-    lostCatList.innerHTML+=`<button onclick="renderItems('Lost','${c}')">${c}</button>`;
-    foundCatList.innerHTML+=`<button onclick="renderItems('Found','${c}')">${c}</button>`;
+    let btnL = document.createElement("button");
+    btnL.textContent = c;
+    btnL.className = "";
+    btnL.addEventListener("click", ()=> renderItems("Lost", c));
+    lostCatList.appendChild(btnL);
+
+    let btnF = document.createElement("button");
+    btnF.textContent = c;
+    btnF.addEventListener("click", ()=> renderItems("Found", c));
+    foundCatList.appendChild(btnF);
   });
 }
 
-/* ✅ FIXED IMAGE PATH */
+/* ===== render items (with image path and delete control) ===== */
 function renderItems(type, cat){
   let box = (type === "Lost") ? lostItemsList : foundItemsList;
+  if(!box) return;
   box.innerHTML = "";
 
   let filtered = items.filter(i => i.type === type && (cat === "All" || i.category === cat));
@@ -549,106 +579,182 @@ function renderItems(type, cat){
   }
 
   filtered.forEach(it => {
-    let imgTag = it.img ? `<img src="${it.img}" style="width:200px;height:200px;object-fit:cover;border-radius:10px;">` : "";
+    // image path stored by backend should be browser path like "/static/uploads/filename.ext"
+    let imgTag = it.img ? `<img src="${it.img}" style="width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:8px;">` : "";
+
+    let canDelete = (currentUser.isAdmin === true) || (it.usn === currentUser.usn);
+    let deleteHtml = canDelete ? `<button onclick="deleteItem('${it.id}','${type}')">Delete</button>` : `<div style="font-size:13px;color:#888;">(You cannot delete this)</div>`;
+
+    // escape backticks/newlines for inline JS in Copy button
+    const dEsc = escapeForInline(it.details);
+    const cEsc = escapeForInline(it.contact);
+    const nEsc = escapeForInline(it.name);
+    const uEsc = escapeForInline(it.usn);
 
     box.innerHTML += `
-    <div class="item-card">
-      ${imgTag}
-      <h3>${it.category}</h3>
-      <p><b>Details:</b> ${it.details}</p>
-      <p><b>Date:</b> ${formatDate(it.date)}</p>
-      <p><b>Reporter:</b> ${it.name} (${it.usn})</p>
-      <p><b>Contact:</b> ${it.contact}</p>
-      <button onclick="copyDetails('${it.details}','${it.contact}','${it.name}','${it.usn}')">Copy</button>
-      ${it.usn === currentUser.usn 
-  ? `<button onclick="deleteItem('${it.id}', '${type}')">Delete</button>`
-  : `<div style="font-size:13px;color:#888;">(You cannot delete this)</div>`
-}
-
-    </div>`;
+      <div class="item-card">
+        ${imgTag}
+        <h3>${it.category}</h3>
+        <p><b>Details:</b> ${it.details}</p>
+        <p><b>Date:</b> ${formatDate(it.date)}</p>
+        <p><b>Reporter:</b> ${it.name} (${it.usn})</p>
+        <p><b>Contact:</b> ${it.contact}</p>
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <button onclick="copyDetails(\`${dEsc}\`,\`${cEsc}\`,\`${nEsc}\`,\`${uEsc}\`)">Copy</button>
+          ${deleteHtml}
+        </div>
+      </div>
+    `;
   });
 }
-async function deleteItem(id,t){
-  let f=new FormData();
-  f.append("id",id);
-  f.append("usn", currentUser.usn); 
-  const r = await fetch("/delete_item",{method:"POST",body:f});
-  const j = await r.json();
 
-  if(j.status === "unauthorized"){
+function escapeForInline(s){
+  if(s === null || s === undefined) return "";
+  return String(s).replace(/`/g, '\\`').replace(/\n/g, '\\n').replace(/\r/g, '');
+}
+
+/* ===== delete item (sends logged-in usn to backend for check) ===== */
+async function deleteItem(id, t){
+  if(!confirm("Are you sure you want to delete this item?")) return;
+  try{
+    let f = new FormData();
+    f.append("id", id);
+    f.append("usn", currentUser.usn || "");
+    const r = await fetch("/delete_item", { method: "POST", body: f });
+    const j = await r.json();
+    if(j.status === "unauthorized"){
       alert("❌ You cannot delete this item.");
       return;
+    }
+    if(j.status === "deleted"){
+      await loadItems();
+      renderItems(t, "All");
+    } else {
+      alert("❌ Delete failed");
+      console.error("delete response:", j);
+    }
+  }catch(err){
+    console.error("delete error:", err);
+    alert("❌ Delete failed (network)");
+  }
+}
+
+/* ===== dashboard refresh ===== */
+function refreshDashboard(){
+  if(statTotal) statTotal.textContent = items.length;
+  if(statLost) statLost.textContent = items.filter(x=>x.type==="Lost").length;
+  if(statFound) statFound.textContent = items.filter(x=>x.type==="Found").length;
+
+  if(catCounts) {
+    catCounts.innerHTML = "";
+    CATEGORIES.slice(1).forEach(c=>{
+      let n = items.filter(x=>x.category === c).length;
+      let div = document.createElement("div");
+      div.textContent = `${c}: ${n}`;
+      catCounts.appendChild(div);
+    });
   }
 
-  await loadItems();
-  renderItems(t,"All");
-}
-function refreshDashboard(){
-  statTotal.textContent=items.length;
-  statLost.textContent=items.filter(x=>x.type==="Lost").length;
-  statFound.textContent=items.filter(x=>x.type==="Found").length;
-  catCounts.innerHTML="";
-  CATEGORIES.slice(1).forEach(c=>{
-    let n=items.filter(x=>x.category===c).length;
-    catCounts.innerHTML+=`<div>${c}: ${n}</div>`;
-  });
-}
-function copyDetails(details, contact, name, usn) {
-    let text = 
-`Reporter: ${name} (${usn})
-Contact: ${contact}
-Details: ${details}`;
-
-    // ✅ Try modern clipboard API
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert("✅ Details copied");
-        }).catch(() => fallbackCopy(text));
-    } else {
-        // ✅ fallback for insecure / mobile browsers
-        fallbackCopy(text);
-    }
+  // re-render open view pages if visible
+  if(lostItemsPage && lostItemsPage.style.display === "block"){
+    renderItems("Lost", "All");
+  }
+  if(foundItemsPage && foundItemsPage.style.display === "block"){
+    renderItems("Found", "All");
+  }
 }
 
-// ✅ fallback function
-function fallbackCopy(text) {
-    let textarea = document.createElement("textarea");
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-    alert("✅ Details copied");
+/* ===== copy details ===== */
+function copyDetails(details, contact, name, usn){
+  let text = `Reporter: ${name} (${usn})\nContact: ${contact}\nDetails: ${details}`;
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(()=> alert("✅ Details copied")).catch(()=> fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+function fallbackCopy(text){
+  let ta = document.createElement("textarea");
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand("copy");
+  document.body.removeChild(ta);
+  alert("✅ Details copied");
 }
 
+/* ===== date format helper ===== */
 function formatDate(d){
-    // input "2025-11-04"
-    let parts = d.split("-");
-    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+  if(!d) return "";
+  let parts = d.split("-");
+  if(parts.length !== 3) return d;
+  return `${parts[2]}/${parts[1]}/${parts[0]}`;
 }
 
-let QUOTES=[
+/* ===== quotes rotate (box stable) ===== */
+let QUOTES = [
   "Every lost thing has a story waiting to be reunited.",
   "Bringing the lost back to where they belong.",
   "Helping lost items find their way home."
 ];
-let qi=0;
-function rotateQuotes(){
-  document.getElementById("quoteText").innerText = QUOTES[qi];
-  qi=(qi+1)%QUOTES.length;
-}
-setInterval(rotateQuotes,2000);
+let qi = 0;
+function rotateQuotes(){ if(quoteText) quoteText.innerText = QUOTES[qi]; qi = (qi+1) % QUOTES.length; }
 
-(function start(){
-  hideAll();
-  loginPage.style.display="flex";
-  loadItems();
-  rotateQuotes();
-})();
-{it.usn === currentUser.usn 
-    ? `<button onclick="deleteItem('${it.id}', '${type}')">Delete</button>`
-    : `<div style="font-size:13px;color:#999;">(You cannot delete this)</div>`
+/* ===== robust UI init for view buttons and category wiring ===== */
+function initUI(){
+  try {
+    // wire "View Items" buttons from the view choice page (defensive)
+    const viewPageButtons = viewChoicePage ? viewChoicePage.querySelectorAll('button') : [];
+    viewPageButtons.forEach(b=>{
+      const txt = b.textContent ? b.textContent.toLowerCase() : "";
+      if(txt.includes("lost")){
+        b.addEventListener("click", (ev)=>{
+          ev.preventDefault();
+          showLostItems();
+        });
+      } else if(txt.includes("found")){
+        b.addEventListener("click", (ev)=>{
+          ev.preventDefault();
+          showFoundItems();
+        });
+      }
+    });
+
+    // also ensure top-level buttons on home page work (if inline removed)
+    const homeBtns = homePage ? homePage.querySelectorAll('button') : [];
+    homeBtns.forEach(b=>{
+      const txt = b.textContent ? b.textContent.toLowerCase() : "";
+      if(txt.includes("report")){
+        b.addEventListener("click", ()=> showReportPage());
+      } else if(txt.includes("view")){
+        b.addEventListener("click", ()=> showViewChoice());
+      }
+    });
+
+    // build categories
+    buildCats();
+  } catch(err){
+    console.error("initUI error:", err);
+  }
 }
+
+/* ===== helper view functions (used by UI) ===== */
+function showLostItems(){ hideAll(); if(lostItemsPage) lostItemsPage.style.display = "block"; buildCats(); renderItems("Lost", "All"); }
+function showFoundItems(){ hideAll(); if(foundItemsPage) foundItemsPage.style.display = "block"; buildCats(); renderItems("Found", "All"); }
+
+/* ===== startup ===== */
+setInterval(rotateQuotes, 2500);
+(function start(){
+  try {
+    hideAll();
+    if(loginPage) loginPage.style.display = "flex";
+    initUI();
+    rotateQuotes();
+    loadItems();
+  } catch(err){
+    console.error("startup error:", err);
+  }
+})();
 </script>
 </body>
 </html>
